@@ -56,6 +56,6 @@ func runPixie(expr string) ([]byte, error) {
 	expr = fmt.Sprintf(tmpl, expr)
 
 	fmt.Printf("; running: %s\n", expr)
-	cmd := exec.Command("/usr/bin/docker", "run", "-i", "--rm", "wunderseltsam/pixie", "-e", expr)
+	cmd := exec.Command("/usr/bin/docker", "run", "-i", "--rm", "-u", "nobody", "wunderseltsam/pixie", "-e", expr)
 	return cmd.CombinedOutput()
 }
