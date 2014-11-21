@@ -1,0 +1,11 @@
+FROM debian:sid
+
+RUN apt-get update \
+    && apt-get install -y libreadline6 libffi6 libuv0.10 \
+    && ln -s /lib/x86_64-linux-gnu/libreadline.so.6 /lib/x86_64-linux-gnu/libreadline.so \
+    && ln -s /usr/lib/x86_64-linux-gnu/libuv.so.0.10 /usr/lib/x86_64-linux-gnu/libuv.so.11
+
+ADD . /usr/src/pixie
+RUN ln -s /usr/src/pixie/pixie-vm /usr/bin/pxi
+
+ENTRYPOINT ["/usr/bin/pxi"]

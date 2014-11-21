@@ -17,6 +17,10 @@ you will need to have [docker](https://www.docker.com/) installed.
     connected, hi there.
     ...
 
+if you want to run a custom pixie version, you need to customize the docker
+image used. to do this, recompile pixie with your changes and use `Dockerfile.pixie`
+to build a custom image.
+
 ## todo
 
 * a better name
