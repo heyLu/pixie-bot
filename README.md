@@ -22,3 +22,8 @@ you will need to have [docker](https://www.docker.com/) installed.
 * a better name
 * some thoughts regarding security
 * something cat-related
+
+## resources
+
+* [documentation for goirc](http://godoc.org/github.com/fluffle/goirc/client)
+* [lazybot](https://github.com/Raynes/lazybot)
