@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 
 	"os"
 	"os/exec"
@@ -26,6 +27,15 @@ func main() {
 
 	c.HandleFunc("privmsg", func(conn *irc.Conn, line *irc.Line) {
 		fmt.Println("privmsg in ", line.Target(), ": ", line.Text())
+		text := strings.TrimSpace(line.Text())
+		if strings.HasPrefix(text, ",") {
+			out, err := runPixie(text[1:])
+			if err != nil {
+				conn.Privmsg(line.Target(), fmt.Sprint("error: ", string(out)))
+			} else {
+				conn.Privmsg(line.Target(), fmt.Sprint("=> ", string(out)))
+			}
+		}
 	})
 
 	if err := c.ConnectTo("irc.freenode.net"); err != nil {
