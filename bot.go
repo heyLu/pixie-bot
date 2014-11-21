@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"strings"
 
@@ -10,13 +11,17 @@ import (
 	irc "github.com/fluffle/goirc/client"
 )
 
+var name = flag.String("name", "pixie-bot", "the name of the bot")
+var channel = flag.String("channel", "#pixie-lang", "the channel to connect to")
+
 func main() {
-	c := irc.SimpleClient("pixie-bot")
+	flag.Parse()
+
+	c := irc.SimpleClient(*name)
 
 	c.HandleFunc("connected", func(conn *irc.Conn, line *irc.Line) {
 		fmt.Println("connected, hi there.")
-		conn.Join("#dotdotdot")
-		conn.Privmsg("#dotdotdot", "may your evals be magnificient")
+		conn.Join(*channel)
 	})
 
 	quit := make(chan bool)
