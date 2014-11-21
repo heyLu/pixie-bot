@@ -5,15 +5,35 @@ import (
 
 	"os"
 	"os/exec"
+
+	irc "github.com/fluffle/goirc/client"
 )
 
 func main() {
-	out, err := runPixie("(+ 3 4)")
-	if err != nil {
-		fmt.Println("Error: ", string(out))
+	c := irc.SimpleClient("pixie-bot")
+
+	c.HandleFunc("connected", func(conn *irc.Conn, line *irc.Line) {
+		fmt.Println("connected, hi there.")
+		conn.Join("#dotdotdot")
+		conn.Privmsg("#dotdotdot", "may your evals be magnificient")
+	})
+
+	quit := make(chan bool)
+	c.HandleFunc("disconnected", func(conn *irc.Conn, line *irc.Line) {
+		fmt.Println("disconnected, bye.")
+		quit <- true
+	})
+
+	c.HandleFunc("privmsg", func(conn *irc.Conn, line *irc.Line) {
+		fmt.Println("privmsg in ", line.Target(), ": ", line.Text())
+	})
+
+	if err := c.ConnectTo("irc.freenode.net"); err != nil {
+		fmt.Printf("Error connecting: %s\n", err)
 		os.Exit(1)
 	}
-	fmt.Print(string(out))
+
+	<-quit
 }
 
 func runPixie(expr string) ([]byte, error) {
