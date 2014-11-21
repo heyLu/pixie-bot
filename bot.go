@@ -8,16 +8,19 @@ import (
 )
 
 func main() {
-	pixieStr := "(+ 3 4)"
-	pixieTmpl := "(print (eval (read-string \"%s\")))"
-	pixieExpr := fmt.Sprintf(pixieTmpl, pixieStr)
-
-	fmt.Printf("; running: %s\n", pixieExpr)
-	cmd := exec.Command("/usr/bin/docker", "run", "-i", "--rm", "wunderseltsam/pixie", "-e", pixieExpr)
-	out, err := cmd.CombinedOutput()
-	if err !=  nil {
-		fmt.Println("Error: ", err, string(out))
+	out, err := runPixie("(+ 3 4)")
+	if err != nil {
+		fmt.Println("Error: ", string(out))
 		os.Exit(1)
 	}
 	fmt.Print(string(out))
+}
+
+func runPixie(expr string) ([]byte, error) {
+	tmpl := "(print (eval (read-string \"%s\")))"
+	expr = fmt.Sprintf(tmpl, expr)
+
+	fmt.Printf("; running: %s\n", expr)
+	cmd := exec.Command("/usr/bin/docker", "run", "-i", "--rm", "wunderseltsam/pixie", "-e", expr)
+	return cmd.CombinedOutput()
 }
