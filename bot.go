@@ -13,7 +13,7 @@ import (
 
 var name = flag.String("name", "pixie-bot", "the name of the bot")
 var channel = flag.String("channel", "#pixie-lang", "the channel to connect to")
-var image = flag.String("image", "wunderseltsam/pixie", "the docker image to use")
+var image = flag.String("image", "pixielang/pixie", "the docker image to use")
 
 func main() {
 	flag.Parse()
