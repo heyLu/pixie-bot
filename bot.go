@@ -13,6 +13,7 @@ import (
 
 var name = flag.String("name", "pixie-bot", "the name of the bot")
 var channel = flag.String("channel", "#pixie-lang", "the channel to connect to")
+var image = flag.String("image", "wunderseltsam/pixie", "the docker image to use")
 
 func main() {
 	flag.Parse()
@@ -56,6 +57,6 @@ func runPixie(expr string) ([]byte, error) {
 	expr = fmt.Sprintf(tmpl, expr)
 
 	fmt.Printf("; running: %s\n", expr)
-	cmd := exec.Command("/usr/bin/docker", "run", "-i", "--rm", "-u", "nobody", "wunderseltsam/pixie", "-e", expr)
+	cmd := exec.Command("/usr/bin/docker", "run", "-i", "--rm", "-u", "nobody", *image, "-e", expr)
 	return cmd.CombinedOutput()
 }
