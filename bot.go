@@ -36,9 +36,9 @@ func main() {
 		if strings.HasPrefix(text, ",") {
 			out, err := runPixie(text[1:])
 			if err != nil {
-				conn.Privmsg(line.Target(), fmt.Sprint("error: ", string(out)))
+				conn.Privmsg(line.Target(), fmt.Sprint("; error: ", string(out)))
 			} else {
-				conn.Privmsg(line.Target(), fmt.Sprint("=> ", string(out)))
+				conn.Privmsg(line.Target(), fmt.Sprint("; => ", string(out)))
 			}
 		}
 	})
