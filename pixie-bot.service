@@ -1,0 +1,10 @@
+[Unit]
+Description=A bot for #pixie-lang
+
+[Service]
+User=nobody
+Group=docker
+ExecStart=/srv/http/pixie-bot
+
+[Install]
+WantedBy=multi-user.target
