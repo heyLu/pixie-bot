@@ -1,5 +1,6 @@
 [Unit]
 Description=A bot for #pixie-lang
+Requires=network.target
 
 [Service]
 User=nobody
