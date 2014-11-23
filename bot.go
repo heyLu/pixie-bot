@@ -35,7 +35,8 @@ func main() {
 		fmt.Println("privmsg in ", line.Target(), ": ", line.Text())
 		text := strings.TrimSpace(line.Text())
 		if strings.HasPrefix(text, ",") {
-			out, err := runPixie(text[1:])
+			text = strings.Replace(text[1:], "\"", "\\\"", -1)
+			out, err := runPixie(text)
 			if err != nil {
 				conn.Privmsg(line.Target(), fmt.Sprint("; error: ", string(out)))
 			} else {
